@@ -1,0 +1,62 @@
+@import 'globals';
+
+body {
+  background-color: $primary-color;
+}
+
+#app {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // background-color: $tertiary-color;
+  // padding-top: 16px;
+
+  .app_container {
+    display: flex;
+    height: 100%;
+
+    #app-main {
+      width: 240px;
+      background-color: $secondary-color;
+
+      .guild_header {
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        box-shadow: $elevation-low;
+        user-select: none;
+      }
+
+      .guild_name {
+        font-family: $font-display;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 20px;
+        white-space: nowrap;
+        text-overflow: ellipse;
+        flex: 1;
+        color: $header-primary;
+      }
+    }
+  }
+}
+
+#app-login {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+
+  #app-login-button {
+    flex-shrink: 0;
+
+  }
+}

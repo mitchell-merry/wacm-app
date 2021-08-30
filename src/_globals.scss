@@ -1,0 +1,26 @@
+// Colours
+$primary-color: #36393f;
+$secondary-color: #2F3136;
+$tertiary-color: #202225;
+
+$header-primary: #fff;
+$settings-default: #8e9297;
+
+$background-modifier-hover: rgba(79,84,92,0.16);
+$interactive-hover: #dcddde;
+
+// Fonts
+$font-display: Ginto, "Helvetica Neue", Helvetica,Arial, sans-serif;
+$font-primary: Whitney,"Helvetica Neue", Helvetica,Arial, sans-serif;
+
+// Box Shadows
+$elevation-low: 0px 1px 0px 0px rgba(4, 4, 5, 0.2) , 
+                0px 1.5px 0px 0px rgba(6, 6, 7, 0.05) , 
+                0px 2px 0px 0px rgba(4, 4, 5, 0.05) ;
+
+// Mixins
+@mixin flexcolumn {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
