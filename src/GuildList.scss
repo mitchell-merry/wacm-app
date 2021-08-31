@@ -5,6 +5,7 @@ $guild-space: 12px;
 #guild_list {
     @include flexcolumn;
 
+    display: flex;
     position: relative;
     min-height: 100%;
     background-color: $tertiary-color;
@@ -54,7 +55,7 @@ $guild-space: 12px;
 .guild_sep_top_line {
     @extend .guild_sep;
     margin: 0 $guild-space;
-    border-top: 1px solid $secondary-color;
+    border-top: 2px solid $secondary-color;
 }
 
 #guild_list::-webkit-scrollbar {

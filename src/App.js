@@ -4,7 +4,7 @@ import GuildList from './GuildList.js';
 import Sidebar from './Sidebar.js';
 import Pane from './Pane.js';
 import { server } from './config';
-import { useTabs } from './Tabs';
+import useTabs from './Tabs';
 
 class App extends React.Component {
 
@@ -74,29 +74,27 @@ class App extends React.Component {
 
     render() {
         const { guilds, current_guild_id, current_tab } = this.state;
-        
+
         // TODO expand on the loading screen / tidy
         if(!guilds) return <>{"Loading..."}</>;
         
         let current = guilds.find(s => s.id === current_guild_id);
+        
+        const tabs = useTabs(current, current_tab);
+
         if(!current) current = guilds.find(s => s.bot_in_guild);
         console.log(current_tab);
         return <div id="app">
-            <div className="app_container">
-                <GuildList 
-                    onGuildChange={this.handleGuildChange} 
-                    guilds={guilds}
-                />
-                <div id="app-main">
-                    <Sidebar 
-                        guild_name={current.name}
-                        onTabChange={this.handleTabChange} 
-                        bot_in_guild={current.bot_in_guild} 
-                        current_tab={current_tab}
-                    />
-                    <Pane />
-                </div>
-            </div>
+            <GuildList 
+                onGuildChange={this.handleGuildChange} 
+                guilds={guilds}
+            />
+            <Sidebar 
+                guild_name={current.name}
+                onTabChange={this.handleTabChange} 
+                tabs={tabs}
+            />
+            <Pane />
         </div>;
     }
 }

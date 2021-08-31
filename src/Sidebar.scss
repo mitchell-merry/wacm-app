@@ -4,6 +4,7 @@
     @include flexcolumn;
     width: 240px;
     
+    display: flex;
     position: relative;
     overflow: hidden scroll;
     background-color: $secondary-color;

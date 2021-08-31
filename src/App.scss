@@ -10,22 +10,8 @@ body {
   height: 100%;
 
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-
-  // background-color: $tertiary-color;
-  // padding-top: 16px;
-}
-
-.app_container {
-  display: flex;
-  height: 100%;
-}
-
-#app-main {
-  display: flex;
   flex-direction: row;
-  width: 100%;
+  overflow: hidden;
 }
 
 .guild_header {
