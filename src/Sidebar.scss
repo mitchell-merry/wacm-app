@@ -1,0 +1,64 @@
+@import 'globals';
+
+#sidebar {
+    @include flexcolumn;
+    width: 240px;
+    
+    position: relative;
+    overflow: hidden scroll;
+    background-color: $secondary-color;
+    flex-grow: 0;
+}
+
+#sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.tab_sep {
+    height: 16px;
+}
+
+.tab {
+    font-family: $font-display;
+    color: $tabs-default;
+    
+    display: flex;
+}
+
+.tab_content {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 1px;
+    padding: 7px 8px;
+    margin: 0 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tab_selected {
+    @extend .tab_content;
+    background-color: $primary-color;
+    color: white;
+}
+
+.tab_content:hover {
+    background-color: $background-modifier-hover;
+    color: $interactive-hover;
+}
+
+.tab_selected:hover {
+    background-color: $primary-color;
+    color: white;
+}
+
+.tab_icon_container {
+    margin-right: 6px;
+}
+
+.tab_name {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+}

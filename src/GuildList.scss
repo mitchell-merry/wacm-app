@@ -12,41 +12,49 @@ $guild-space: 12px;
 
     overflow: hidden scroll;
 
-    .guild {
-        @include flexcolumn;
-        
-        width: $guild-space*4;
-        height: $guild-space*4;
-        margin: 0 $guild-space $guild-space $guild-space;
-        background-color: $secondary-color;
+}
+
+.guild {
+    @include flexcolumn;
+    
+    width: $guild-space*4;
+    height: $guild-space*4;
+    margin: 0 $guild-space $guild-space $guild-space;
+    background-color: $secondary-color;
+    border-radius: $guild-space*2;
+    
+    cursor: pointer;
+    user-select: none;
+    transition-duration: 0.1s;
+
+    img {
+        width: 100%;
+        height: 100%;
         border-radius: $guild-space*2;
-        
-        cursor: pointer;
         user-select: none;
         transition-duration: 0.1s;
-
-        img {
-            width: 100%;
-            height: 100%;
-            border-radius: $guild-space*2;
-            user-select: none;
-            transition-duration: 0.1s;
-        }
-
-        img:hover {
-            border-radius: $guild-space;
-            transition-duration: 0.1s;
-        }
     }
 
-    .guild:hover {
+    img:hover {
         border-radius: $guild-space;
         transition-duration: 0.1s;
     }
+}
 
-    .guild_sep {
-        padding-top: $guild-space;
-    }
+.guild:hover {
+    border-radius: $guild-space;
+    transition-duration: 0.1s;
+}
+
+.guild_sep {
+    flex-shrink: 0;
+    height: $guild-space;
+
+}
+.guild_sep_top_line {
+    @extend .guild_sep;
+    margin: 0 $guild-space;
+    border-top: 1px solid $secondary-color;
 }
 
 #guild_list::-webkit-scrollbar {

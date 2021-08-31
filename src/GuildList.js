@@ -17,12 +17,21 @@ class Guild extends React.Component {
 class GuildList extends React.Component {
 
     render() {
-        const {user_guilds, onGuildChange} = this.props;
+        const { guilds, onGuildChange } = this.props;
         
+        let guilds_bot_in = guilds.filter(g => g.bot_in_guild);
+        let guilds_bot_not_in = guilds.filter(g => !g.bot_in_guild);
+
         return <div id="guild_list">
             {
-                user_guilds.map((guild, i) => {
-                    return <Guild key={guild.id} {...guild} onGuildChange={onGuildChange}/>
+                guilds_bot_in.map((guild, i) => {
+                    return <Guild key={guild.id} {...guild} onGuildChange={onGuildChange} />
+                })
+            }
+            <div className={"guild_sep_top_line"}/>
+            {
+                guilds_bot_not_in.map((guild, i) => {
+                    return <Guild key={guild.id} {...guild} onGuildChange={onGuildChange} />
                 })
             }
             <div className={"guild_sep"}/>
