@@ -1,0 +1,41 @@
+@import 'globals';
+
+.content {
+    display: flex;
+    flex-grow: 1;
+}
+
+#invite-pane {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#invite-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    font-family: $font-primary;
+    color: white;
+    font-weight: 550;
+
+    img {
+        border-radius: 50%;
+        margin-bottom: 30px;
+    }
+
+    a {
+        text-decoration: none;
+        line-height: 30px;
+        font-size: 20px;
+        color: white;
+
+        padding: 10px;
+        background-color: $blurple;
+        border-radius: 10px;
+
+    }
+}

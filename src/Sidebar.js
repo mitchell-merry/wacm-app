@@ -2,9 +2,9 @@ import React from "react";
 import './Sidebar.scss';
 import tabicon from './tabicon.svg';
 
-function GuildHeader() {
+function GuildHeader( { guild_name }) {
     return <header className={"guild_header"}>
-        <h1 className={"guild_name"}>{this.props.guild_name}</h1>
+        <h1 className={"guild_name"}>{guild_name}</h1>
     </header>;
 }
 

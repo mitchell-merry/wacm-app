@@ -63,3 +63,22 @@
     font-weight: 400;
     text-overflow: ellipsis;
 }
+
+.guild_header {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: $elevation-low;
+  user-select: none;
+}
+
+.guild_name {
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipse;
+  flex: 1;
+  color: $header-primary;
+}
