@@ -1,102 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './App.scss';
 import GuildList from './GuildList.js';
 import Sidebar from './Sidebar.js';
 import Pane from './Pane.js';
 import { server } from './config';
 import useTabs from './Tabs';
+import { AppLoading } from './AppExtra.js';
 
-class App extends React.Component {
+// Fetch the guilds?
+async function fetchGuildsForUser(authorization) {
+    const resp = await fetch('https://discord.com/api/users/@me/guilds', { headers: { authorization }});
+    const json = await resp.json();
+    return json.filter(s => (s.permissions & 8) !== 0);
+}
 
-    constructor(props) {
-        super(props);
-        this.state = { 
-            current_guild_id: false, 
-            current_tab: false,
-            guilds: false,
-        };
+// Fetch guilds the bot is in
+async function fetchGuildsForBot() {
+    const resp = await fetch(server + '/api/v1/guild');
+    const json = await resp.json();
+    return json;
+}
 
-        this.handleGuildChange = this.handleGuildChange.bind(this);
-        this.handleTabChange = this.handleTabChange.bind(this);
-    }
+function App({authorization}) {
+    const [ guilds, setGuilds ] = useState(false);
+    const [ currentGuildId, setCurrentGuildId ] = useState(false);
+    const [ currentTabId, setCurrentTabId ] = useState(false);
+    const tabs = useTabs(guilds, currentGuildId, currentTabId);
 
-    handleGuildChange(event) {
-        const {id} = event.target.dataset;
-        this.setState({
-            current_guild_id: id,
-        });
-    };
+    useEffect(() => {
+        async function fetchGuildsAndUpdate() {
+            const user_guilds = await fetchGuildsForUser(authorization);
+            const bot_guilds = await fetchGuildsForBot();
+            
+            const guilds = user_guilds.map((guild) => {
+                // Get corresponding guild in bot_guilds
+                let bot_guild_settings = bot_guilds.find(bg => bg.guild_id === guild.id);
+                // Combine the objects, and add a new field to see if the bot is in that guild, excluding guild_id
+                let {guild_id, ...g} = {...guild, ...bot_guild_settings, bot_in_guild: !!bot_guild_settings};
+                return g;
+            });
+            
+            setCurrentGuildId(guilds[0].id);
+            setGuilds(guilds);
+        }
+        fetchGuildsAndUpdate();
+    }, []);
 
-    handleTabChange(event) {
-        const { name } = event.target.dataset;
-        this.setState({
-            current_tab: name,
-        });
-    }
+    if(!guilds || !currentGuildId) return <AppLoading />;
+    
+    if(!currentTabId) setCurrentTabId(tabs.find(t => t.selected).name);
 
-    // Fetch the guilds?
-    async fetchGuildsForUser() {
-        const resp = await fetch('https://discord.com/api/users/@me/guilds', {
-            headers: {
-                authorization: this.props.authorization,
-            },
-        });
-        const json = await resp.json();
-        return json.filter(s => (s.permissions & 8) !== 0);
-    }
+    let current = guilds.find(s => s.id === currentGuildId);
 
-    // Fetch guilds the bot is in
-    async fetchGuildsForBot() {
-        const resp = await fetch(server + '/api/v1/guild');
-        const json = await resp.json();
-        return json;
-    }
-
-    async fetchGuildsAndUpdate() {
-        const user_guilds = await this.fetchGuildsForUser();
-        const bot_guilds = await this.fetchGuildsForBot();
-        
-        let guilds = user_guilds.map((guild) => {
-            // Get corresponding guild in bot_guilds
-            let bot_guild_settings = bot_guilds.find(bg => bg.guild_id === guild.id);
-            // Combine the objects, and add a new field to see if the bot is in that guild, excluding guild_id
-            let {guild_id, ...r} = {...guild, ...bot_guild_settings, bot_in_guild: !!bot_guild_settings};
-            return r;
-        });
-        console.log(guilds);
-
-        this.setState({current_guild_id: guilds[0].id, guilds});
-    }
-
-    componentDidMount() {
-        this.fetchGuildsAndUpdate();
-    }
-
-    render() {
-        const { guilds, current_guild_id, current_tab } = this.state;
-
-        // TODO expand on the loading screen / tidy
-        if(!guilds) return <>{"Loading..."}</>;
-        
-        let current = guilds.find(s => s.id === current_guild_id);
-        
-        const tabs = useTabs(current, current_tab);
-
-        if(!current) current = guilds.find(s => s.bot_in_guild);
-        console.log(current_tab);
-        return <div id="app">
-            <GuildList 
-                onGuildChange={this.handleGuildChange} 
-                guilds={guilds}
-            />
-            <Sidebar 
-                guild_name={current.name}
-                onTabChange={this.handleTabChange} 
-                tabs={tabs}
-            />
-            <Pane />
-        </div>;
-    }
+    return <div id="app">
+        <GuildList 
+            onGuildChange={(e) => setCurrentGuildId(e.target.dataset.id)} 
+            guilds={guilds}
+        />
+        <Sidebar 
+            guild_name={current.name}
+            onTabChange={(e) => setCurrentTabId(e.target.dataset.name)} 
+            tabs={tabs}
+        />
+        <Pane />
+    </div>;
 }
 
 export default App;

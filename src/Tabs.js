@@ -1,15 +1,18 @@
-import { useState } from 'react'
+const tabsWithBot = ["guild-settings","category-sets", "role-menus", "moderation", "permissions", "members",];
+const tabsWOutBot = ["invite-me"];
 
-const tabs_with_bot = ["guild-settings","category-sets", "role-menus", "moderation", "permissions", "members",];
-const tabs_wout_bot = ["invite-me"];
-
-const useTabs = (current_guild, current_tab_name) => {
-    let tabs = current_guild.bot_in_guild ? 
-        tabs_with_bot.map(tab => {return {name: tab, selected: false}}) :
-        tabs_wout_bot.map(tab => {return {name: tab, selected: false}});
+const useTabs = (guilds, currentGuildId, currentTabId) => {
+    if(!currentGuildId || !guilds) return undefined;
     
-    let current_tab_idx = tabs.findIndex(tab => tab.name === current_tab_name);
-    if(!current_tab_idx) current_tab_idx = 0;
+    const currentGuild = guilds.find(s => s.id === currentGuildId);
+
+    let tabs = currentGuild.bot_in_guild ? 
+        tabsWithBot.map(tab => {return {name: tab, selected: false}}) :
+        tabsWOutBot.map(tab => {return {name: tab, selected: false}});
+    
+    let current_tab_idx = tabs.findIndex(tab => tab.name === currentTabId);
+    
+    if(current_tab_idx === -1) current_tab_idx = 0;
     tabs[current_tab_idx].selected = true;
 
     return tabs;

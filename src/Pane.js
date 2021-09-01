@@ -1,13 +1,10 @@
 import React from "react";
 import './Pane.scss';
 
-class Pane extends React.Component {
-    render() {
+function Pane() {
+    return <div className={"pane"}>
 
-        return <div className={"pane"}>
-            
-        </div>
-    }
+    </div>
 }
 
 export default Pane;
