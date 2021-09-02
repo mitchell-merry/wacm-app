@@ -77,7 +77,7 @@ function App({authorization}) {
             onTabChange={(e) => setCurrentTabId(e.target.dataset.name)} 
             tabs={tabs}
         />
-        <Content currentTabId={currentTabId} botInfo={botInfo}/>
+        <Content currentTabId={currentTabId} botInfo={botInfo} guild={current} />
     </div>;
 }
 
