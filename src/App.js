@@ -50,7 +50,7 @@ function App({authorization}) {
                 return g;
             });
             
-            setCurrentGuildId(guilds[0].id);
+            setCurrentGuildId(guilds.find(g => g.bot_in_guild).id);
             setGuilds(guilds);
 
             const botInfo = await fetchBotInfo();
@@ -59,7 +59,7 @@ function App({authorization}) {
         fetchAll();
     }, [authorization]);
 
-    if(!guilds || !currentGuildId || !botInfo) return <AppLoading />;
+    if(!guilds || !currentGuildId || !botInfo) return <AppLoading items={{guilds, currentGuildId, botInfo}}/>;
     
     // To make sure the current tab ID is synchronised
     let currentTab = tabs.find(t => t.selected);

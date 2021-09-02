@@ -7,10 +7,14 @@ function AppLogin() {
     </div>;
 }
 
-function AppLoading() {
-
+function AppLoading({ items }) {
     return <div id="app-loading">
         Loading...
+        {
+            Object.keys(items).map(item => {
+                return `${item} - ${!!items[item]}`
+            })
+        }
     </div>
 }
 
